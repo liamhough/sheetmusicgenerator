@@ -1,2 +1,0 @@
-# sheetmusicgenerator
-Capstone Project
