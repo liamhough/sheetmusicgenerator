@@ -1,3 +1,44 @@
-main{
+body {
+    font-family: "Monaco", monospace;
+    background-color: #E8DADA;
     padding: 10px;
+}
+
+.title {
+    height: 120px;
+    width: 30%;
+    margin-left: 35%;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    background-color: #748F97;
+    color: #EEEEEE;
+    text-align: center;
+}
+
+.header {
+    font-size: 40px;
+}
+
+.sub-header {
+    font-size: 30px;
+}
+
+/* Do some on hover styling */
+.record-btn {
+    text-align: center;
+    padding-top: 2px;
+    margin-top: 20px;
+    margin-left: 37.5%;
+    width: 25%;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1.8rem;
+    color: #EEEEEE;
+    background-color: #748F97;
+}
+
+a:hover {
+    color: #E8DADA;
+    text-decoration: none;
 }
