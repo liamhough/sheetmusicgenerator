@@ -15,14 +15,16 @@ def index(request):
 
 def composition(request):
     template = loader.get_template('composition.html')
+    name = request.GET['name']
     context = {
-        
+        "name": name
     }
     return HttpResponse(template.render(context, request))
 
 def recording(request):
     template = loader.get_template('recording.html')
+    name = request.GET['name']
     context = {
-        
+        "name": name
     }
     return HttpResponse(template.render(context, request)) 
