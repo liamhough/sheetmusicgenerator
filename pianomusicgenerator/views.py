@@ -13,8 +13,6 @@ stop_time = 0
 counter = 0
 my_recording = 0
 is_recording = False
-write_to_file = False
-
 
 def index(request):
     template = loader.get_template('home.html')
@@ -37,7 +35,6 @@ def recording(request):
     global counter
     global is_recording
     global my_recording
-    global write_to_file
 
     template = loader.get_template('recording.html')
     name = request.GET['name']
