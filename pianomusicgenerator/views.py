@@ -57,8 +57,6 @@ def recording(request):
     while is_recording == True:
         continue
 
-    print(my_recording)
-
     recording_time = stop_time - start_time
     my_recording = my_recording[0 : int(recording_time * fs)]
     name = 'my_recording_' + str(int(start_time)) + '.wav'
