@@ -28,6 +28,52 @@ def composition(request):
     context = {
         "name": name
     }
+    # from pprint import pprint
+    # import os
+
+    # import flat_api
+    # from flat_api.rest import ApiException
+
+    # configuration = flat_api.Configuration()
+    # configuration.access_token = '77597d6bf10b76ca0a641ede8e14c053dc7eb7f37b9fc15c31db5bca7feec0fdbb56e2b8a116c984912a875811843ea25fe12fde655fef3c289057c6f792b715'
+    # flat_api_client = flat_api.ApiClient(configuration)
+    # try:
+    #     pprint(flat_api.AccountApi(flat_api_client).get_authenticated_user())
+    # except ApiException as e:
+    #     print (e)
+    from pprint import pprint
+    import os
+    from urllib.request import urlopen
+    import urllib.error
+
+    import flat_api
+    from flat_api.rest import ApiException
+
+    #SCORE_TO_IMPORT='https://gist.githubusercontent.com/gierschv/938479bec2bbe8c39eebbc9e19d027a0/raw/2caa4fa312184412d0d544feb361f918869ceaa5/hello-world.xml'
+    
+    SCORE_TO_IMPORT = 'C:\wamp64\www\sheetmusicgenerator\river.mid'
+
+    configuration = flat_api.Configuration()
+    configuration.access_token = "77597d6bf10b76ca0a641ede8e14c053dc7eb7f37b9fc15c31db5bca7feec0fdbb56e2b8a116c984912a875811843ea25fe12fde655fef3c289057c6f792b715"
+    flat_api_client = flat_api.ApiClient(configuration)
+
+    try:
+        # Download a MusicXML "Hello World"
+        # hello_world = urlopen(SCORE_TO_IMPORT).read()
+
+        # The new score meta, including the MusicXML file as `data`
+
+        flat_api.ScoreCreationFileImport(
+            title='Hello World',
+            privacy='private',
+            data=SCORE_TO_IMPORT
+        )
+
+        # Create the document and print the meta returned by the API
+        pprint(flat_api.ScoreApi(flat_api_client).create_score(new_score))
+    except (ApiException, urllib.error) as e:
+        print(e)
+
     return HttpResponse(template.render(context, request))
 
 
@@ -65,7 +111,6 @@ def recording(request):
     my_recording = 0
 
     return HttpResponse(template.render(context, request)) 
-
 
 def setStartTime():
     global start_time
