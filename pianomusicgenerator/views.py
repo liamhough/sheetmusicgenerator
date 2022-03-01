@@ -48,31 +48,34 @@ def composition(request):
 
     import flat_api
     from flat_api.rest import ApiException
+    import base64
+    # from mido import MidiFile
 
-    #SCORE_TO_IMPORT='https://gist.githubusercontent.com/gierschv/938479bec2bbe8c39eebbc9e19d027a0/raw/2caa4fa312184412d0d544feb361f918869ceaa5/hello-world.xml'
+    # midFile = MidiFile('river.mid', clip=True)
+    # f = open("river.mid", "rb")
+    # print(f.read())
+
+    with open("river.mid", "rb") as f:
+        sam = base64.b64encode(f.read())
+
+    new = open('river.mid', 'rb', encoding='base64')
+
+    print('SAM:', sam)
+
     
-    SCORE_TO_IMPORT = 'C:\wamp64\www\sheetmusicgenerator\river.mid'
+    # encoded = base64.b64encode(f)
 
     configuration = flat_api.Configuration()
     configuration.access_token = "77597d6bf10b76ca0a641ede8e14c053dc7eb7f37b9fc15c31db5bca7feec0fdbb56e2b8a116c984912a875811843ea25fe12fde655fef3c289057c6f792b715"
     flat_api_client = flat_api.ApiClient(configuration)
 
-    try:
-        # Download a MusicXML "Hello World"
-        # hello_world = urlopen(SCORE_TO_IMPORT).read()
-
-        # The new score meta, including the MusicXML file as `data`
-
-        flat_api.ScoreCreationFileImport(
-            title='Hello World',
-            privacy='private',
-            data=SCORE_TO_IMPORT
-        )
-
-        # Create the document and print the meta returned by the API
-        pprint(flat_api.ScoreApi(flat_api_client).create_score(new_score))
-    except (ApiException, urllib.error) as e:
-        print(e)
+    new_score = flat_api.ScoreCreation(
+        title='Hello World',
+        privacy='public',
+        data = new,
+        # dataEncoding='base64',
+    )
+    pprint(flat_api.ScoreApi(flat_api_client).create_score(new_score))
 
     return HttpResponse(template.render(context, request))
 
