@@ -28,19 +28,6 @@ def composition(request):
     context = {
         "name": name
     }
-    # from pprint import pprint
-    # import os
-
-    # import flat_api
-    # from flat_api.rest import ApiException
-
-    # configuration = flat_api.Configuration()
-    # configuration.access_token = '77597d6bf10b76ca0a641ede8e14c053dc7eb7f37b9fc15c31db5bca7feec0fdbb56e2b8a116c984912a875811843ea25fe12fde655fef3c289057c6f792b715'
-    # flat_api_client = flat_api.ApiClient(configuration)
-    # try:
-    #     pprint(flat_api.AccountApi(flat_api_client).get_authenticated_user())
-    # except ApiException as e:
-    #     print (e)
     from pprint import pprint
     import os
     from urllib.request import urlopen
@@ -49,33 +36,27 @@ def composition(request):
     import flat_api
     from flat_api.rest import ApiException
     import base64
-    # from mido import MidiFile
 
-    # midFile = MidiFile('river.mid', clip=True)
-    # f = open("river.mid", "rb")
-    # print(f.read())
+    midiFileName = name + ".mid"
 
-    with open("river.mid", "rb") as f:
-        sam = base64.b64encode(f.read())
-
-    new = open('river.mid', 'rb', encoding='base64')
-
-    print('SAM:', sam)
-
-    
-    # encoded = base64.b64encode(f)
+    with open(midiFileName, "rb") as f:
+        midiFile = base64.b64encode(f.read()).decode("utf-8")
 
     configuration = flat_api.Configuration()
     configuration.access_token = "77597d6bf10b76ca0a641ede8e14c053dc7eb7f37b9fc15c31db5bca7feec0fdbb56e2b8a116c984912a875811843ea25fe12fde655fef3c289057c6f792b715"
     flat_api_client = flat_api.ApiClient(configuration)
 
     new_score = flat_api.ScoreCreation(
-        title='Hello World',
-        privacy='public',
-        data = new,
-        # dataEncoding='base64',
+        title= name + " Import",
+        privacy= 'public',
+        data = midiFile,
+        data_encoding= 'base64',
+        # collection='61842df5eef4bd0012d07eb6'
     )
-    pprint(flat_api.ScoreApi(flat_api_client).create_score(new_score))
+
+    response = flat_api.ScoreApi(flat_api_client).create_score(new_score)
+
+    print(response)
 
     return HttpResponse(template.render(context, request))
 
@@ -108,8 +89,8 @@ def recording(request):
 
     recording_time = stop_time - start_time
     my_recording = my_recording[0 : int(recording_time * fs)]
-    name = 'my_recording_' + str(int(start_time)) + '.wav'
-    write(name, fs, my_recording)  # Save as WAV file
+    wave_name = name + '.wav'
+    write(wave_name, fs, my_recording)  # Save as WAV file
     counter = 0
     my_recording = 0
 
