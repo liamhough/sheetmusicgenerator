@@ -50,8 +50,7 @@ def composition(request):
         title= name + " Import",
         privacy= 'public',
         data = midiFile,
-        data_encoding= 'base64',
-        # collection='61842df5eef4bd0012d07eb6'
+        data_encoding= 'base64'
     )
 
     response = flat_api.ScoreApi(flat_api_client).create_score(new_score)
