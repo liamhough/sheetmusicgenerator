@@ -50,7 +50,7 @@ def input_id(request):
     from flat_api.rest import ApiException
     import base64
 
-    midiFileName = "river" + ".mid"
+    midiFileName = score_name + ".mid"
 
     with open(midiFileName, "rb") as f:
         midiFile = base64.b64encode(f.read()).decode("utf-8")
@@ -110,7 +110,7 @@ def recording(request):
 
         wav_path = 'C:/wamp64/www/sheetmusicgenerator/' + wave_name
 
-    #    transcribe.main(wav_path)
+        transcribe.main(wav_path)
 
     return HttpResponse(template.render(context, request)) 
 
