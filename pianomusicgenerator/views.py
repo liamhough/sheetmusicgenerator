@@ -1,3 +1,7 @@
+import sys        
+sys.path.append('C:/wamp64/www/sheetmusicgenerator/RSE')       
+import transcribe   
+ 
 from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse
@@ -86,12 +90,18 @@ def recording(request):
     while is_recording == True:
         continue
 
-    recording_time = stop_time - start_time
-    my_recording = my_recording[0 : int(recording_time * fs)]
-    wave_name = name + '.wav'
-    write(wave_name, fs, my_recording)  # Save as WAV file
-    counter = 0
-    my_recording = 0
+    if write_to_file == True:
+        recording_time = stop_time - start_time
+        my_recording = my_recording[0 : int(recording_time * fs)]
+        wave_name = name + '.wav'
+        write(wave_name, fs, my_recording)  # Save as WAV file
+        counter = 0
+        my_recording = 0
+
+        wav_path = 'C:/wamp64/www/sheetmusicgenerator/' + wave_name
+
+        print("jkfevnboqjefnvijqbeifvbqwonvnoenfvoinwefvnoiqefnvoiqenfovnqefovnqeoffvnoiqenovinqeoifrfvnoqerniern")
+        transcribe.main(wav_path)
 
     return HttpResponse(template.render(context, request)) 
 
