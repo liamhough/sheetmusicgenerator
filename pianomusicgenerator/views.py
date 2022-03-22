@@ -25,13 +25,22 @@ def index(request):
     }
     return HttpResponse(template.render(context, request))
 
-
 def composition(request):
     template = loader.get_template('composition.html')
-    name = request.GET['name']
+    score_id = request.GET['score_id']
     context = {
-        "name": name
+        "score_id": score_id
     }
+
+    return HttpResponse(template.render(context, request))
+
+def input_id(request):
+    template = loader.get_template('input_id.html')
+    score_name = request.GET['name']
+    context = {
+        "name": score_name
+    }
+
     from pprint import pprint
     import os
     from urllib.request import urlopen
@@ -41,7 +50,7 @@ def composition(request):
     from flat_api.rest import ApiException
     import base64
 
-    midiFileName = name + ".mid"
+    midiFileName = "river" + ".mid"
 
     with open(midiFileName, "rb") as f:
         midiFile = base64.b64encode(f.read()).decode("utf-8")
@@ -51,7 +60,7 @@ def composition(request):
     flat_api_client = flat_api.ApiClient(configuration)
 
     new_score = flat_api.ScoreCreation(
-        title= name + " Import",
+        title= score_name + " Import",
         privacy= 'public',
         data = midiFile,
         data_encoding= 'base64'
@@ -64,15 +73,16 @@ def composition(request):
     return HttpResponse(template.render(context, request))
 
 
+
 def recording(request):
     global counter
     global is_recording
     global my_recording
 
     template = loader.get_template('recording.html')
-    name = request.GET['name']
+    score_name = request.GET['name']
     context = {
-        "name": name
+        "name": score_name
     }
 
     counterIncrement()
@@ -93,15 +103,14 @@ def recording(request):
     if write_to_file == True:
         recording_time = stop_time - start_time
         my_recording = my_recording[0 : int(recording_time * fs)]
-        wave_name = name + '.wav'
+        wave_name = score_name + '.wav'
         write(wave_name, fs, my_recording)  # Save as WAV file
         counter = 0
         my_recording = 0
 
         wav_path = 'C:/wamp64/www/sheetmusicgenerator/' + wave_name
 
-        print("jkfevnboqjefnvijqbeifvbqwonvnoenfvoinwefvnoiqefnvoiqenfovnqefovnqeoffvnoiqenovinqeoifrfvnoqerniern")
-        transcribe.main(wav_path)
+    #    transcribe.main(wav_path)
 
     return HttpResponse(template.render(context, request)) 
 

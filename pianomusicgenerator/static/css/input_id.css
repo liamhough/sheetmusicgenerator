@@ -1,0 +1,38 @@
+body {
+    font-family: "Monaco", monospace;
+    background-color: #E8DADA
+}
+
+.square {
+    height: 400px;
+    width: 30%;
+    margin-left: 35%;
+    margin-top: 80px;
+    margin-bottom: 80px;
+    border-radius: 5%;
+    background-color: #748F97;
+}
+
+.record-btn {
+    text-align: center;
+    padding-top: 2px;
+    margin-top: 150px;
+    margin-bottom: 20px;
+    width: 30%;
+    margin-left: 35%;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1.8rem;
+    color: #748F97;
+    background-color: #E8DADA;
+}
+
+.id-input {
+    font-size: 2rem;
+    color: #EEEEEE;
+    text-align: center;
+    width: 80%;
+    margin-left: 10%;
+    padding-top: 50px;
+}
