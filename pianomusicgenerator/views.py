@@ -63,7 +63,8 @@ def input_id(request):
         title= score_name + " Import",
         privacy= 'public',
         data = midiFile,
-        data_encoding= 'base64'
+        data_encoding= 'base64',
+        collection='623b9bfb00468500133bf599'
     )
 
     response = flat_api.ScoreApi(flat_api_client).create_score(new_score)
